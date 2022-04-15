@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add Pet Form
+{% endblock %}
+
+{% block main_content %}
+<div class="row justify-content-left">
+    <div class="col-4 card text-centger mt-2 ms-2">
+        <img src="{{pet.photo_url}}" height="300px" width="300px" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{pet.name}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                {% if pet.available %}
+                    Available to adopt 
+                {% else %}
+                    Not available to adopt
+                {% endif %}
+                </h6>
+                <p class="card-text">Species: {{pet.species}}
+                <br>
+                Age: {{pet.age}}</p>
+                <p class="card-text">{{pet.notes}}</p>
+            </div>
+    </div>
+    <div class="col-6 align-self-center">
+        <form id="pet_add_form" method="POST">
+            {{form.hidden_tag()}}
+
+            {% for field in form
+                if field.widget.input_type != 'hidden' %}
+
+            <p>
+                {{ field.label }}
+                {{ field }}
+
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+            </p>
+
+            {% endfor %}
+            <button class="btn btn-warning" type='submit'>Edit Pet</button>
+    </div>
+</div>
+{% endblock %}
